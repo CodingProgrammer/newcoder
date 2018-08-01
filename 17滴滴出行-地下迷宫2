@@ -1,0 +1,53 @@
+'''
+（1）优先级：右-上-下-左
+（2）不能回到来时的路(while)
+'''
+n, m, p = map(int, input().split())
+obstacles = []
+res = ['[0,0]']
+for _ in range(n):
+    obstacles.append(list(map(int, input().split())))
+cur_r, cur_c = 0, 0
+ 
+while p > 0:
+    if cur_r == 0 and cur_c == m - 1:
+        break
+    move = False
+    #right
+    while p > 0 and cur_c < m - 1 and obstacles[cur_r][cur_c+1] == 1:
+        cur_c += 1
+        p -= 1
+        res.append('[%d,%d]'%(cur_r,cur_c))
+        move = True
+    if move:
+        continue
+    #up
+    while p > 0 and cur_r > 0 and obstacles[cur_r-1][cur_c] == 1:
+        cur_r -= 1
+        p -= 3
+        res.append('[%d,%d]'%(cur_r,cur_c))
+        move = True
+    if move:
+        continue
+    #down
+    while p > 0 and cur_r < n - 1 and obstacles[cur_r+1][cur_c] == 1:
+        if obstacles[cur_r][cur_c+1] == 1:
+            break
+        cur_r += 1
+        res.append('[%d,%d]'%(cur_r,cur_c))
+        move = True
+    if move:
+        continue
+    #left
+    while p > 0 and cur_c > 0 and obstacles[cur_r][cur_c-1] == 1:
+        cur_c -= 1
+        p -= 1
+        res.append('[%d,%d]'%(cur_r,cur_c))
+        move = True
+    if move:
+        continue
+ 
+if p >= 0 and (cur_r == 0 and cur_c == m - 1):
+    print(','.join(res))
+else:
+    print("Can not escape!")
