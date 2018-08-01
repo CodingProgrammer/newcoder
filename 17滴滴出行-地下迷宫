@@ -1,0 +1,49 @@
+'''
+基本思想：典型的迷宫问题，DFS穷举所有路径，找出剩余体力最多的路径
+优先级：右-上-下-左
+'''
+#函数：寻找最优路径
+def search(cur_r, cur_c, cur_p):
+    #将当前点加入路径并标记为VISITED
+    global res, final_p
+    pathStack.append([cur_r,cur_c])
+    maze[cur_r][cur_c] = 0
+    #如果当前点为出口且当前体力值>=0，则更新final_P与minCostPath，并返回
+    if cur_r == 0 and cur_c == m - 1 and cur_p >= 0:
+        if cur_p > final_p:
+            final_p = cur_p
+            res = pathStack.copy()
+        pathStack.pop()
+        maze[cur_r][cur_c] = 1
+        return
+
+    #如果当前点并非出口且当前体力值>=0，则分别向左右上下四个方向探索，并计算相应的消耗
+    #如果新的点再边界内且为可达点，递归调用search函数
+    if cur_p > 0:
+        for i in range(4):
+            next_r = cur_r + dir_next[i][0]
+            next_c = cur_c + dir_next[i][1]
+            next_p = cur_p + cost[i]
+            if (next_r >= 0 and next_r < n) and (next_c >= 0 and next_c < m) and maze[next_r][next_c]:
+                search(next_r, next_c, next_p)
+    
+    #为了回退至之前的节点，将当前结点弹出
+    pathStack.pop()
+    maze[cur_r][cur_c] = 1
+    
+
+n, m, p = map(int, input().split())
+maze = []
+for _ in range(n):
+    maze.append(list(map(int, input().split())))
+pathStack = []
+visited = [[False for _ in range(m)] for _ in range(n)]
+final_p = -10000
+dir_next = [[0,1],[-1,0],[1,0],[0,-1]]
+cost = [-1, -3, 0, -1]
+res = []
+search(0, 0, p)
+if final_p >= 0 and res[-1] == [0, m-1]:
+    print(','.join(['[%d,%d]'%(each[0],each[1]) for each in res]))
+else:
+    print('Can not escape!')
