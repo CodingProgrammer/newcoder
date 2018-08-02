@@ -1,0 +1,13 @@
+import sys
+import re
+if __name__ == "__main__":
+    pattern1 = re.compile(r"[^A-Z]+")#存在小写字母
+    pattern2 = re.compile(r"([A-Z])\1")#存在连续的字母
+    pattern3 = re.compile(r"([A-Z])[A-Z]*([A-Z])[A-Z]*\1[A-Z]*\2")#存在交叉出现的字符
+     
+    word = sys.stdin.readline()
+    word = word.rstrip('\n')
+    if pattern1.search(word) or pattern2.search(word) or pattern3.search(word):
+        print("Dislikes")
+    else:
+        print("Likes")
