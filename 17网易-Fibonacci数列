@@ -1,0 +1,15 @@
+def Fibonacci():
+    a, b = 0, 1
+    while True:
+        yield b
+        a, b = b, a+b
+
+
+n = int(input())
+pre, cur = 1, 1    
+for each in Fibonacci():
+    cur = each
+    if cur > n:
+        break
+    pre = cur
+print(min(abs(n-pre), abs(n-cur)))
