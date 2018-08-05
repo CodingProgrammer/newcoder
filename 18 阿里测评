@@ -11,8 +11,11 @@ for i in range(length):
         while j >= 0 and ratings[j] > ratings[j+1]:
             candy[j] = candy[j+1] + 1
             j -= 1
-    if i > 0 and ratings[i] > ratings[i-1]:
-        candy[i] = candy[i-1] + 1
+   if i > 0 and ratings[i] >= ratings[i-1]:
+        if ratings[i] == ratings[i-1]:
+            candy[i] = candy[i-1]
+        else:
+            candy[i] = candy[i-1] + 1
 
 print(sum(candy))
 
@@ -39,8 +42,12 @@ public class Main {
         for(int i=0;i<arr.length;i++){
 
             //前一个比当前的小,当前加1
-            if(i!=0&&arr[i]>arr[i-1]){
-                paper[i]=paper[i-1]+1;
+            if(i!=0&&arr[i]>=arr[i-1]){
+                if (arr[i]==arr[i-1]){
+                    paper[i]=paper[i-1]
+                }else{
+                    paper[i]=paper[i-1]+1;
+                }
             }
 
             //一个往前比，一个往后比，这个难想
