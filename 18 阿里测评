@@ -1,0 +1,17 @@
+ratings = list(map(int, input().split(',')))
+
+length = len(ratings)
+
+candy = [1 for _ in range(length)]
+
+for i in range(length):
+    if i != length-1 and ratings[i] > ratings[i+1]:
+        candy[i] = candy[i+1] + 1
+        j = i - 1
+        while j >= 0 and ratings[j] > ratings[j+1]:
+            candy[j] = candy[j+1] + 1
+            j -= 1
+    if i > 0 and ratings[i] > ratings[i-1]:
+        candy[i] = candy[i-1] + 1
+
+print(sum(candy))
