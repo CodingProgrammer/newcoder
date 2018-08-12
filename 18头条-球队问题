@@ -1,0 +1,34 @@
+def islandCount(l):
+    res = 0
+    max_team = 0
+    r = len(l)
+    c = len(l[0])
+    for i in range(r):
+        for j in range(c):
+            if l[i][j] == 1:
+                res += 1
+                temp = 0
+                temp += infect(l, i, j, r - 1, c - 1)
+                if temp > max_team:
+                    max_team = temp
+    return res, max_team
+
+def infect(arr, i, j, r, c):
+    if i < 0 or i > r or j < 0 or j > c or arr[i][j] != 1:
+        return 0
+    ans = 1
+    arr[i][j] = 2
+    ans += infect(arr, i - 1, j, r, c)
+    ans += infect(arr, i + 1, j, r, c)
+    ans += infect(arr, i, j - 1, r, c)
+    ans += infect(arr, i, j + 1, r, c)
+    ans += infect(arr, i - 1, j - 1, r, c)
+    ans += infect(arr, i - 1, j + 1, r, c)
+    ans += infect(arr, i + 1, j - 1, r, c)
+    ans += infect(arr, i + 1, j + 1, r, c)
+    return ans
+
+
+n,m = map(int, input().split())
+l = [list(map(int, input().split())) for _ in range(n)]
+print(islandCount(l))
