@@ -1,0 +1,23 @@
+# -*- coding:utf-8 -*-
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    # 返回ListNode
+    def ReverseList(self, pHead):
+        # write code here
+        if not pHead:
+            return pHead
+        myStcak = []
+        while pHead:
+            myStcak.append(pHead)
+            pHead = pHead.next
+        
+        cur = myStcak.pop()
+        res = cur
+        while myStcak:
+            cur.next = myStcak[-1]
+            cur = myStcak.pop()
+        cur.next = None
+        return res
